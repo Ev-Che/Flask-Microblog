@@ -1,0 +1,32 @@
+<table>
+    <tr>
+        <td><a href="{{ url_for('main.user', username=post.author.username) }}">
+            <img src="{{ post.author.avatar(70) }}" alt="">
+        </a>
+        </td>
+        <td>
+            <a href="{{ url_for('main.user', username=post.author.username) }}">
+                {{ post.author.username }}</a> {{ _('said %(when)s', when=moment(post.timestamp).fromNow()) }}<br>
+            <br>
+            <b>
+                <span id="post{{ post.id }}">
+                    {{ post.body }}
+                </span>
+            </b>
+            <b>
+                {% if post.language and post.language != g.locale %}
+                    <br><br>
+                    <span id="translation{{ post.id }}">
+                        <a href="javascript:translate(
+                            '#post{{ post.id }}',
+                            '#translation{{ post.id }}',
+                            '{{ post.language }}',
+                            '{{ g.locale }}',
+                        );">{{ _('Translate') }}</a>
+                    </span>
+                {% endif %}
+            </b>
+        </td>
+    </tr>
+</table>
+<br><br>
