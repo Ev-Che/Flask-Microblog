@@ -9,7 +9,8 @@ load_dotenv(os.path.join(BASEDIR, '.env'))
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'asdkjfhaswqrjwre'
 
-    SQLALCHEMY_DATABASE_URI = (os.environ.get('DATABASE_URL') or
+    SQLALCHEMY_DATABASE_URI = (os.environ.get('DATABASE_URL', '').replace(
+        'postgres://', 'postgresql://') or
                                'sqlite:///' + os.path.join(BASEDIR,
                                                            'app.db'))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -28,3 +29,5 @@ class Config:
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
 
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
